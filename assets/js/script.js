@@ -86,7 +86,7 @@ const companiesArray = [
     },
     {
         id: "amd",
-      pictureSrc:"./assets/images/AMD_logo.png",
+      pictureSrc:"./assets/images/AMD-logo.png",
       imageAlt: "amd logo"
     },
     {
