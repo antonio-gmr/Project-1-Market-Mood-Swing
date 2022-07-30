@@ -1,0 +1,12 @@
+.card {
+    border-radius: 15px;
+}
+
+.card:hover {
+    border: 1px solid blue;
+    cursor:pointer;
+}
+
+.card-image {
+    padding: 15px;
+}
