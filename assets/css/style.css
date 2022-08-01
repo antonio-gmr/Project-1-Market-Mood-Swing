@@ -1,5 +1,13 @@
+body {
+    font-family: 'Ibarra Real Nova', serif;
+}
+
+header {
+    padding-bottom: 20px;
+}
+
 .card {
-    border-radius: 15px;
+    border-radius: 20px;
 }
 
 .card:hover {
