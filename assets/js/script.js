@@ -6,7 +6,7 @@ companiesArray1.forEach(function(element) {
     htmlCode +
     `
     <div class="column">
-      <div class="card">
+      <div class="card" data-key=${element.performanceId}>
         <div class="card-image">
           <figure class="image is-4by3">
             <img src="${element.pictureSrc}" alt="${element.imageAlt}">
@@ -28,7 +28,7 @@ companiesArray2.forEach(function(element) {
     htmlCode +
     `
     <div class="column">
-      <div class="card">
+      <div class="card" data-key=${element.performanceId}>
         <div class="card-image">
           <figure class="image is-4by3">
             <img src="${element.pictureSrc}" alt="${element.imageAlt}">
@@ -50,7 +50,7 @@ companiesArray3.forEach(function(element) {
     htmlCode +
     `
     <div class="column">
-      <div class="card">
+      <div class="card" data-key=${element.performanceId}>
         <div class="card-image">
           <figure class="image is-4by3">
             <img src="${element.pictureSrc}" alt="${element.imageAlt}">
@@ -72,7 +72,7 @@ companiesArray4.forEach(function(element) {
     htmlCode +
     `
     <div class="column">
-      <div class="card">
+      <div class="card" data-key=${element.performanceId}>
         <div class="card-image">
           <figure class="image is-4by3">
             <img src="${element.pictureSrc}" alt="${element.imageAlt}">
@@ -94,7 +94,7 @@ companiesArray5.forEach(function(element) {
     htmlCode +
     `
     <div class="column">
-      <div class="card">
+      <div class="card" data-key=${element.performanceId}>
         <div class="card-image">
           <figure class="image is-4by3">
             <img src="${element.pictureSrc}" alt="${element.imageAlt}">
@@ -108,3 +108,11 @@ companiesArray5.forEach(function(element) {
 
 const companiesCards5 = document.querySelector(".all-companies5");
 companiesCards5.innerHTML = htmlCode;
+
+
+document.querySelectorAll('.card').forEach(item => {
+  item.addEventListener('click', event => {
+    alert("click")
+  })
+})
+
