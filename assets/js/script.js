@@ -51,4 +51,3 @@ document.querySelectorAll('.card').forEach(item => {
 })
 
 
-
