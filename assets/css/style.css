@@ -6,6 +6,10 @@ header {
     padding-bottom: 20px;
 }
 
+.banner {
+    padding: 3rem;
+}
+
 .card {
     border-radius: 20px;
 }
