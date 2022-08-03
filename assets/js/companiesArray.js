@@ -22,10 +22,7 @@ const companiesArray1 = [
       pictureSrc:"./assets/images/Samsung_logo.png",
       imageAlt: "samsung logo",
       performanceId:"0P0000UTAU"
-    }
-]
-
-const companiesArray2 = [
+    },
     {
         id: "paypal",
       pictureSrc:"./assets/images/PayPal_logo.png",
@@ -49,10 +46,8 @@ const companiesArray2 = [
       pictureSrc:"./assets/images/Microsoft_logo.png",
       imageAlt: "microsoft logo",
       performanceId:"0P000003MH"
-    }
-]
-
-const companiesArray3 = [    {
+    },
+    {
         id: "meta",
       pictureSrc:"./assets/images/Meta_logo.png",
       imageAlt: "meta logo",
@@ -75,10 +70,7 @@ const companiesArray3 = [    {
       pictureSrc:"./assets/images/General_Electric_logo.png",
       imageAlt: "general electric logo",
       performanceId:"0P000002DO"
-    }
-]
-
-const companiesArray4 = [
+    },
     {
         id: "ford",
       pictureSrc:"./assets/images/Ford_logo.png",
@@ -102,10 +94,7 @@ const companiesArray4 = [
       pictureSrc:"./assets/images/Bank_of_america_logo.png",
       imageAlt: "bank of america logo",
       performanceId:"0P000000PA"
-    }
-]
-
-const companiesArray5 = [
+    },
     {
         id: "apple",
       pictureSrc:"./assets/images/Apple_logo.png",
