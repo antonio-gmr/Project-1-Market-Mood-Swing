@@ -46,7 +46,7 @@ APP CREATED BY: TEAM 2 :)
 
 ## Links
 - Github Repository: https://github.com/antonio-gmr/Project-1-Market-Mood-Swing
-- Deployed Github Pages link: 
+- Deployed Github Pages link: https://antonio-gmr.github.io/Project-1-Market-Mood-Swing/
 
 ## License
 
