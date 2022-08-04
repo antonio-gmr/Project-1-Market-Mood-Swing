@@ -15,7 +15,7 @@ header {
 }
 
 .card:hover {
-    border: 1px solid blue;
+    border: 1px solid rgb(135, 178, 207);
     cursor:pointer;
 }
 

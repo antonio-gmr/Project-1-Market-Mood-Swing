@@ -14,7 +14,31 @@
 }
 
 .savedNewsElement {
-
     cursor: pointer;
 
+}
+
+
+.card:hover {
+    border: 2px solid rgb(135, 178, 207);
+    cursor:pointer;
+}
+
+.card-image {
+    padding: 35px;
+}
+
+.notification {
+    
+    font-size: x-large;
+
+}
+
+.list-companyName {
+    font-size: Large;
+
+}
+
+.savedNewsElement {
+    font-size: smaller;
 }
