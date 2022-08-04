@@ -1,0 +1,20 @@
+
+
+.titleRow:hover {
+    cursor: pointer;
+}
+
+.sentimentNumber {
+    font-size: xx-large;
+    font-weight: bolder;
+    text-align: center;
+    padding-top: 4px;
+    padding-left: 4px;
+
+}
+
+.savedNewsElement {
+
+    cursor: pointer;
+
+}

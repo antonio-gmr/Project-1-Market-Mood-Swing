@@ -1,170 +1,402 @@
+var newsObject = {
+  '0': {
+    id: '',
+    title: '',
+    text: '',
+    sentiment: '',
+  },
+  '1': {
+    id: '',
+    title: '',
+    text: '',
+    sentiment: '',
+  },
+  '2': {
+    id: '',
+    title: '',
+    text: '',
+    sentiment: '',
+  },
+  '3': {
+    id: '',
+    title: '',
+    text: '',
+    sentiment: '',
+  }
+}
 
-var performanceId =location.search.split('?')[1];
-console.log("la clave " + performanceId)
+// var sentimentData = document.querySelectorAll('.sentiment');
+var numberData = document.querySelectorAll('.number');
+var titleRow = document.querySelectorAll('.titleRow');
+var table = document.querySelector('.table');
+var saveNewsButton = document.querySelector('#saveNewsButton')
 
-consulta(performanceId);
+var newsId = [];
+var newsTitleArray = []
+var sentimentResultArray = [];
+var textToAnalyzeArray = [];
 
+var apiK = '0a0df23692mshac18e5e471bd5fdp1bfcadjsn411fe1be785f';
 
+var analisis;
 var abc;
 var xyz;
 var textToAnalyze;
+var notaDeAnalista;
+
+
+var performanceId = location.search.split('?')[1];
+consulta(performanceId);
+
+
+
+window.onload = (event) => {
+
+  savedNewslist = JSON.parse(localStorage.getItem("savedNewslist"));
+
+  if (savedNewslist != null) {
+    populateSavedNewsList(savedNewslist)
+  }
+  
+
+};
+
 
 function consulta (ticker) {
 
-    // var ticker = '0P0000CPCP';
-  
-  
-    const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': '85833d30d9msh85eb490dc8a99e2p115b44jsn06448356e16c',
-        'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
-      }
-    };
-  
-    // Get News Titles (MS FINANCE API Query)
-    fetch('https://ms-finance.p.rapidapi.com/news/list?performanceId=' + performanceId, options)
-  
-      .then(function (response) {
-          return response.json();
-      }).then(function (data) {
-          console.log(data);
+  companyInfo = companiesArray1.filter(element => {return element.performanceId == performanceId})
+
+  document.querySelector('#companyImg').src = companyInfo[0].pictureSrc;
+  document.querySelector('#CompanyName').textContent = companyInfo[0].id.toUpperCase();
 
 
-          data = data.filter(element => {return element.sourceId != 'pr-newswire'});
-          var titleNews = document.querySelectorAll('.titleNews')
 
-          xyz = data;
-       
-          for (let i = 0; i < titleNews.length; i++) {
 
-              titleNews[i].textContent = data[i].title;
-              titleNews[i].innerHTML += '<br><small>' + data[i].sourceName + ', ' +  data[i].publishedDate + '</small>';
-              
-              
-              titleNews[i].setAttribute('data-articleId', data[i].id)
-              titleNews[i].setAttribute('data-sourceId', data[i].sourceId)
 
-              console.log('https://ms-finance.p.rapidapi.com/news/get-details?id='+ data[i].id +'&sourceId='+ data[i].sourceId)
-
-              getNewsText (data[i].id, data[i].sourceId);
-          }
-          
-          
-      });
   
   
-    // Get Analyst Note (MS FINANCE API Query)
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': apiK,
+      'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
+    }
+  };
+
+      // Get Analyst Note (MS FINANCE API Query)
+
       fetch('https://ms-finance.p.rapidapi.com/stock/v2/get-analysis-report?performanceId=' + performanceId, options)
-  
+
       .then(function (response) {
           return response.json();
       }).then(function (data) {
           console.log(data);
+
+          jkl = data;
           
           var analystNote = document.querySelector('.analystNote');
     
+          notaDeAnalista = data.analystNote.note;
           
-          analystNote.innerHTML = data.analystNote.note;
+
+          if (data.analystNote.note != null) {
+            analystNote.innerHTML = data.analystNote.note;
+            // document.querySelector('#analystNoteDiv').hidden = false
+            
+            if (data.analystNote.author.authorImage != null) {
+            document.querySelector('#analystPic').src = data.analystNote.author.authorImage;}
+            document.querySelector('#analystPic').hidden = false;
+            document.querySelector('#authorName').textContent = data.analystNote.author.authorName;
           
-          if (data.analystNote.author.authorImage != null) {
-          document.querySelector('#analystPic').src = data.analystNote.author.authorImage;}
-          document.querySelector('#authorName').textContent = data.analystNote.author.authorName;
-                    
-      });
-  
+          }
+            
+
+      }); 
+
+
+  // Get News Titles (MS FINANCE API Query)
+  fetch('https://ms-finance.p.rapidapi.com/news/list?performanceId=' + performanceId, options)
+
+    .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+
+
+        data = data.filter(element => {return element.sourceId != 'pr-newswire'});
+        var titleNews = document.querySelectorAll('.titleNews');
+        
+        
+
+        xyz = data;
+      
+        for (let i = 0; i < titleNews.length; i++) {
+
+
+            numberData[i].textContent = eval(i) + 1
+            titleNews[i].textContent = data[i].title;
+            titleNews[i].innerHTML += '<br><small>' + data[i].sourceName + ', ' +  data[i].publishedDate + '</small>';
+            
+            
+            titleRow[i].setAttribute('data-articleId', data[i].id);
+            titleRow[i].setAttribute('data-sourceId', data[i].sourceId);
+            titleRow[i].setAttribute('data-position', i);
+
+            console.log('https://ms-finance.p.rapidapi.com/news/get-details?id='+ data[i].id +'&sourceId='+ data[i].sourceId);
+
+            newsTitleArray.push(data[i].title);
+            newsId.push(data[i].id);
+
+            getNewsText (data[i].id, data[i].sourceId);
+
+
+          }
+        
+    })
+
+    loadingWait();
+
 
   }
 
 
 //   Query - Sentiment Analysis
-var analisis;
-
-function sentimentAnalysis () {
-
-
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '0a0df23692mshac18e5e471bd5fdp1bfcadjsn411fe1be785f',
-            'X-RapidAPI-Host': 'twinword-sentiment-analysis.p.rapidapi.com'
-        }
-    };
-    
-    // analyzeText = "Narrow-moat%20Apple%20reported%20healthy%20fiscal%20third-quarter%20results%20that%20came%20in%20line%20with%20our%20estimates.%20We%20are%20maintaining%20our%20%24130%20fair%20value%20estimate%20and%20still%20view%20shares%20as%20overvalued.%20While%20we%20remain%20positive%20on%20Apple's%20ability%20to%20extract%20sales%20from%20its%20installed%20base%20via%20new%20products%20and%20services%2C%20we%20believe%20demand%20for%20Apple%E2%80%99s%20products%20is%20likely%20to%20slow%20in%20the%20next%20few%20quarters%2C%20following%20several%20stellar%20quarters%20of%20growth."
-    analyzeText = "<p>Tesla's second-quarter results reflected the company's temporary issues as gross profits fell over 20% versus the first quarter but were still up over 45% year on year. During the quarter, revenue and profits were affected by COVID-19-related lockdowns that affected production at the company's Shanghai factory. Additionally, the opening and ramp-up of the new factories in Austin and Berlin weighed on profits. However, we had largely expected that the second quarter would be the low point of the year, and we maintain our outlook for Tesla to deliver around 1.5 million vehicles in 2022. Our outlook for the automotive segment is largely unchanged.</p>"
-
-    fetch('https://twinword-sentiment-analysis.p.rapidapi.com/analyze/?text=' + analyzeText, options)
-
-  
-    .then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data);
-        
-        analisis = data;
-
-    
-    
-});
-
-
-}
-
-
-
 function getNewsText (articleId, sourceId) {
 
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': '85833d30d9msh85eb490dc8a99e2p115b44jsn06448356e16c',
+      'X-RapidAPI-Key': apiK,
       'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
     }
   };
 
   fetch('https://ms-finance.p.rapidapi.com/news/get-details?id='+ articleId +'&sourceId='+ sourceId, options)
-            .then(function (response) {
-                return response.json();
-            }).then(function (extract) {
-                console.log(extract);
+    .then(function (response) {
+        return response.json();
+    }).then(function (extract) {
+        console.log(extract);
 
-              abc = extract;
+      abc = extract;
 
-              textToAnalyze = '';
-              var failedProcess = 0;
-              var endProcess = false;
-              var extractLength = Object.keys(extract).length;
-              i = 0;
+      textToAnalyze = '';
+      var failedProcess = 0;
+      var endProcess = false;
+      var extractLength = Object.keys(extract).length;
+      i = 0;
 
-              while (!endProcess) {
-                console.log('initiasl i= ' + i);
-                                
-                if(extract.body && extract.body[i].contentObject && i < extractLength) {
-                  
-                  newText = extract.body[i].contentObject[0].content;
-                  textToAnalyze += newText;
-                  console.log(textToAnalyze);
-                  
-                  // textLength += newText.length;
+      while (!endProcess) {
+        console.log('initiasl i= ' + i);
+                        
+        if(extract.body && extract.body[i].contentObject && i < extractLength) {
           
-                  if (textToAnalyze.length > 1500) {
-                   textToAnalyze.substr(0,1500);
-                   endProcess = true; 
-                  }
+          newText = extract.body[i].contentObject[0].content;
+          textToAnalyze += newText;
+          console.log(textToAnalyze);
+          
+          // textLength += newText.length;
+  
+          if (textToAnalyze.length > 1500) {
+            textToAnalyze.substr(0,1500);
+            endProcess = true; 
+          }
 
-                } else {
-                  failedProcess ++;
-                  if (failedProcess > 5) {
-                    endProcess = true
-                  }
-                }
-                
-                i++;
-                console.log('final i= ' + i);
-              }
-              
-            });
+        } else {
+          failedProcess ++;
+          if (failedProcess > 5) {
+            endProcess = true
+          }
+        }
+        
+
+        i++;
+        console.log('final i= ' + i);
+      }
+
+    textToAnalyzeArray.push(textToAnalyze);
+      
+    });
 
 }
+
+
+function loadingWait () {
+  var secondsLeft = 8;
+
+  var timerInterval = setInterval(function() {
+    secondsLeft--;
+
+    if(secondsLeft == 0) {
+      clearInterval(timerInterval);
+      
+      sentimentAnalysis();
+
+    }
+
+  },1000);
+  
+}
+
+
+function sentimentAnalysis() {
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': apiK,
+            'X-RapidAPI-Host': 'twinword-sentiment-analysis.p.rapidapi.com'
+        }
+    };
+    
+    sentimentNumber = document.querySelectorAll('.sentimentNumber');
+    sentimentData = document.querySelectorAll('.sentimentData');
+
+
+    for (let index = 0; index < textToAnalyzeArray.length; index++) {
+      const element = textToAnalyzeArray[index];
+      
+    
+      fetch('https://twinword-sentiment-analysis.p.rapidapi.com/analyze/?text=' + element, options)
+
+          .then(function (response) {
+              return response.json();
+          }).then(function (data) {
+              console.log(data);
+              console.log('El sentimiento es: ' + data.type)
+
+              sentimentResultArray.push(data.type);
+
+              // sentimentData[index].textContent = data.type;
+              
+              newsObject[index].sentiment = data.type;
+
+              newsObject[index].id = newsId[index];
+              newsObject[index].title = newsTitleArray[index];
+              newsObject[index].text = textToAnalyzeArray[index];
+
+              if (data.type == "positive") {
+                sentimentIcon = "<span style='font-size:40px;'>&#128513;</span>"
+                sentimentData[index].setAttribute('class','has-text-centered sentimentData has-background-success-light') 
+              }
+              if (data.type == "negative") {
+                sentimentIcon = "<span style='font-size:40px;'>&#128534;</span>"
+                sentimentData[index].setAttribute('class', 'has-text-centered sentimentData has-background-danger-light') 
+              
+              }
+              if (data.type == "neutral") {
+                sentimentIcon = "<span style='font-size:40px;'>&#128528;</span>"
+                sentimentData[index].setAttribute('class', 'has-text-centered sentimentData has-background-warning-light') 
+              }
+
+
+              sentimentNumber[index].textContent = eval(index) + 1;
+              sentimentData[index].innerHTML = '<small>' + data.type + '</small><br> ' + sentimentIcon;
+  
+        });
+
+    }
+
+}
+
+var selection
+
+table.querySelectorAll('.titleRow').forEach(item => {
+  item.addEventListener('click', event => {
+
+    selection = event.target;
+    console.log(selection);
+
+    if(selection.matches('td')){newsPosition = selection.parentElement.getAttribute('data-position')}
+    if(selection.matches('tr')){newsPosition = selection.getAttribute('data-position')}
+
+    document.querySelector('#extractTitle').textContent = newsObject[newsPosition].title;
+
+    document.querySelector('.extractContentDiv').hidden = false;
+    document.querySelector('#extractContent').innerHTML = textToAnalyzeArray[newsPosition];
+
+    
+    saveNewsButton.disabled = false;
+    saveNewsButton.setAttribute('data-position', newsPosition);
+    
+
+  })
+})
+
+
+
+document.querySelectorAll('#savedNewsDiv').forEach(item => (
+  item.addEventListener('click', event => {
+
+    selection = event.target;
+    console.log('este es el boton: ' + selection)
+
+    newsOrder = selection.getAttribute('data-newsOrder');
+    var savedNewslist = JSON.parse(localStorage.getItem("savedNewslist"));
+
+    selectedNews = savedNewslist.filter(element => {return element.newsOrder ==  newsOrder});
+
+    console.log(selectedNews[0].text)
+    document.querySelector('.extractContentDiv').hidden = false;
+    document.querySelector('#extractContent').innerHTML = selectedNews[0].text + '<br><br> Sentiment of Extract: ' +  selectedNews[0].sentiment.toUpperCase();
+
+    saveNewsButton.disabled = true;
+
+
+
+  })
+))
+
+
+
+
+saveNewsButton.addEventListener('click', event => {
+
+  newsPosition = saveNewsButton.getAttribute('data-position');
+  
+  var newSavedNews = {
+    newsOrder: moment().unix(),
+    id: newsObject[newsPosition].id,
+    title: newsObject[newsPosition].title,
+    text: newsObject[newsPosition].text,
+    sentiment: newsObject[newsPosition].sentiment
+  }
+
+  var savedNewslist = JSON.parse(localStorage.getItem("savedNewslist"));
+    
+  if (savedNewslist == null) {
+    savedNewslist = [] 
+  }
+
+  savedNewslist = savedNewslist.filter(element => {return element.id != newsObject[newsPosition].id})
+  savedNewslist.push(newSavedNews);
+  savedNewslist = savedNewslist.sort(function(a, b){return b.newsOrder - a.newsOrder})
+
+  if (savedNewslist.length > 8) { savedNewslist.pop();}
+
+  localStorage.setItem('savedNewslist', JSON.stringify(savedNewslist))
+
+
+
+  populateSavedNewsList(savedNewslist);
+
+})
+
+
+function populateSavedNewsList(list) {
+
+  document.querySelector('#savedNewsDiv').innerHTML = "";
+
+  for (let i = 0; i < list.length; i++) {
+    var newElement = document.createElement('div');
+    newElement.setAttribute('class','savedNewsElement notification is-info');
+    newElement.setAttribute('data-newsOrder', list[i].newsOrder);
+    
+    newElement.innerHTML = list[i].title
+
+
+    document.querySelector('#savedNewsDiv').append(newElement);
+  }
+
+}
+
 

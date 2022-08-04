@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/css/styles2.css">
 
-
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+    ></script>
 
 
     <title>Document</title>
@@ -23,6 +27,10 @@
           <p class="subtitle">
             Sentiment Analysis
           </p>
+
+          <div class="buttons is-right">
+            <button id="backtoDashboard" class="button is-danger m-0" >Back to  Dashboard...</button>
+          </div>
         </div>
     </section>
 
@@ -32,12 +40,13 @@
              <div class="tile is-parent is-vertical">
 
               <article class="tile is-child box is-grey-lighter ">
-                <p class="title">Main News:</p>
+                <p class="title my-2">Main News:</p>
+                <p class="has-text-weight-medium mb-2">Click on a News Title to see the extract</p>
                 <table class="table is-stripped is-fullwidth  is-hoverable">
-                  <tr><td class="titleNews"></td><td class="sentiment">Positive</td></tr>
-                  <tr><td class="titleNews"></td><td class="sentiment">Positive</td></tr>
-                  <tr><td class="titleNews"></td><td class="sentiment">Positive</td></tr>
-                  <tr><td class="titleNews"></td><td class="sentiment">Positive</td></tr>
+                  <tr class="titleRow"><td class="number has-text-centered"></td><td class="titleNews"></td></tr>
+                  <!-- <tr class="titleRow"><td class="number has-text-centered"></td><td class="titleNews"></td></tr> -->
+                  <!-- <tr class="titleRow"><td class="number has-text-centered"></td><td class="titleNews"></td></tr> -->
+                  <!-- <tr class="titleRow"><td class="number has-text-centered"></td><td class="titleNews"></td></tr> -->
                 </table>
 
                 <!-- <p class="subtitle titleNews has-text-weight-semibold">News Title</p> -->
@@ -45,53 +54,71 @@
               </article>
             </div>
             <div class="tile is-parent">
-              <article class="tile is-child notification is-info">
-                <p class="title">Middle tile</p>
-                <p class="subtitle">With an image</p>
-                <!-- <figure class="image is-4by3">
-                  <img src="https://bulma.io/images/placeholders/640x480.png">
-                </figure> -->
+              <article class="tile is-child notification is-grey-lighter">
+                
+                <div class="columns">
+                  <div class=" column is-8">
+                    <p class="title" id="CompanyName"></p>
+                    <p class="subtitle">Sentiment Analysis</p>
+                  </div>
+                  
+                  <figure class="image column is-4">
+                    <img id="companyImg">
+                  </figure>
+                </div>
+                <table id="sentimentTable" class="table is-stripped is-fullwidth  is-hoverable">
+                  <tr><td class="sentimentNumber has-text-centered"></td><td class="sentimentData"></td></tr>
+                  <tr><td class="sentimentNumber has-text-centered"></td><td class="sentimentData"></td></tr>
+                  <tr><td class="sentimentNumber has-text-centered"></td><td class="sentimentData"></td></tr>
+                  <tr><td class="sentimentNumber has-text-centered"></td><td class="sentimentData"></td></tr>
+                </table>
               </article>
             </div>
           </div>
           <div class="tile is-parent is-vertical">
             <article class="tile is-child notification is-danger">
+              <div class="content">
+                <p class="title">News Extract...</p>
+                  <div class="extractContentDiv m-2" hidden>
 
+                    <p id="extractTitle" class="subtitle has-text-weight-semibold"></p>
+                    <div id="extractContent" class="content"></div>
+
+                </div>
+
+                <div class="buttons is-right">
+                  <button id="saveNewsButton" class="button is-link m-2" disabled >Save News...</button>
+                </div>
+
+              </div>
             </article>
-            <article class="tile is-child notification is-danger">
-              <div class="content columns">
-                <p class="title">Sentiment Analysis</p>
-                <p class=""></p>
-                <div class="content">
-                  <!-- Content -->
+
+            <article class="tile is-child notification is-link" id="analystNoteDiv" hidden>
+              <div class="columns">
+                <div>
+                    <img  class="m-2" id="analystPic" alt="Analyst Pic" hidden>
+                </div>
+                <div class="column is-6">
+                    <p class="title m-0">Analyst Note</p>
+                    <P id="authorName"></P>
                 </div>
               </div>
-            </article>
-          </div>
-        </div>
-        <div class="tile is-parent is is-vertical">
-          <article class="tile is-child notification is-success">
-            <div class="columns">
-              <div>
-                  <img  class="m-2" id="analystPic" alt="Analyst Pic">
-              </div>
-              <div class="column is-6">
-                  <p class="title m-0">Analyst Note</p>
-                  <P id="authorName"></P>
-              </div>
-          </div>
-            <p class=""></p>
-            <div class="content analystNote">
-              <!-- Content -->
-            </div>
-          </article>
-          <article class="tile is-child notification is-success">
-            <div class="content">
-              <p class="title"></p>
               <p class=""></p>
-              <div class="content">
+              <div class="content analystNote">
                 <!-- Content -->
               </div>
+            </article>
+
+          </div>
+        </div>
+
+        <div class="tile is-parent">
+          <article class="tile is-child notification is-success">
+            <div  class="content">
+              <p class="title">Saved News</p>
+
+              <div id="savedNewsDiv"></div>
+
             </div>
           </article>
         </div>
@@ -101,7 +128,7 @@
     
 
 
-
+<script src="./assets/js/companiesArray.js"></script>
 <script src="./assets/js/script_analysis.js"></script>
 
 </body>
