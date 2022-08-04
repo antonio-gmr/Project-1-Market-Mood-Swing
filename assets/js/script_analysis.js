@@ -4,6 +4,11 @@ console.log("la clave " + performanceId)
 
 consulta(performanceId);
 
+
+var abc;
+var xyz;
+var textToAnalyze;
+
 function consulta (ticker) {
 
     // var ticker = '0P0000CPCP';
@@ -24,12 +29,27 @@ function consulta (ticker) {
           return response.json();
       }).then(function (data) {
           console.log(data);
-          
+
+
+          data = data.filter(element => {return element.sourceId != 'pr-newswire'});
           var titleNews = document.querySelectorAll('.titleNews')
-  
+
+          xyz = data;
+       
           for (let i = 0; i < titleNews.length; i++) {
-            titleNews[i].textContent = data[i].title;
+
+              titleNews[i].textContent = data[i].title;
+              titleNews[i].innerHTML += '<br><small>' + data[i].sourceName + ', ' +  data[i].publishedDate + '</small>';
+              
+              
+              titleNews[i].setAttribute('data-articleId', data[i].id)
+              titleNews[i].setAttribute('data-sourceId', data[i].sourceId)
+
+              console.log('https://ms-finance.p.rapidapi.com/news/get-details?id='+ data[i].id +'&sourceId='+ data[i].sourceId)
+
+              getNewsText (data[i].id, data[i].sourceId);
           }
+          
           
       });
   
@@ -43,19 +63,17 @@ function consulta (ticker) {
           console.log(data);
           
           var analystNote = document.querySelector('.analystNote');
-          
+    
           
           analystNote.innerHTML = data.analystNote.note;
           
           if (data.analystNote.author.authorImage != null) {
           document.querySelector('#analystPic').src = data.analystNote.author.authorImage;}
-
           document.querySelector('#authorName').textContent = data.analystNote.author.authorName;
-  
-          
-          
+                    
       });
   
+
   }
 
 
@@ -92,3 +110,61 @@ function sentimentAnalysis () {
 
 
 }
+
+
+
+function getNewsText (articleId, sourceId) {
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '85833d30d9msh85eb490dc8a99e2p115b44jsn06448356e16c',
+      'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
+    }
+  };
+
+  fetch('https://ms-finance.p.rapidapi.com/news/get-details?id='+ articleId +'&sourceId='+ sourceId, options)
+            .then(function (response) {
+                return response.json();
+            }).then(function (extract) {
+                console.log(extract);
+
+              abc = extract;
+
+              textToAnalyze = '';
+              var failedProcess = 0;
+              var endProcess = false;
+              var extractLength = Object.keys(extract).length;
+              i = 0;
+
+              while (!endProcess) {
+                console.log('initiasl i= ' + i);
+                                
+                if(extract.body && extract.body[i].contentObject && i < extractLength) {
+                  
+                  newText = extract.body[i].contentObject[0].content;
+                  textToAnalyze += newText;
+                  console.log(textToAnalyze);
+                  
+                  // textLength += newText.length;
+          
+                  if (textToAnalyze.length > 1500) {
+                   textToAnalyze.substr(0,1500);
+                   endProcess = true; 
+                  }
+
+                } else {
+                  failedProcess ++;
+                  if (failedProcess > 5) {
+                    endProcess = true
+                  }
+                }
+                
+                i++;
+                console.log('final i= ' + i);
+              }
+              
+            });
+
+}
+
