@@ -4,24 +4,32 @@ var newsObject = {
     title: '',
     text: '',
     sentiment: '',
+    sentimentIcon: '',
+    companyName: '',
   },
   '1': {
     id: '',
     title: '',
     text: '',
     sentiment: '',
+    sentimentIcon: '',
+    companyName: '',
   },
   '2': {
     id: '',
     title: '',
     text: '',
     sentiment: '',
+    sentimentIcon: '',
+    companyName: '',
   },
   '3': {
     id: '',
     title: '',
     text: '',
     sentiment: '',
+    sentimentIcon: '',
+    companyName: '',
   }
 }
 
@@ -35,14 +43,16 @@ var newsId = [];
 var newsTitleArray = []
 var sentimentResultArray = [];
 var textToAnalyzeArray = [];
+var companyInfo;
 
 var apiK = '0a0df23692mshac18e5e471bd5fdp1bfcadjsn411fe1be785f';
+var apiK2 = '36d1e27f4fmsh47c374d19337a38p189fa0jsn1737be2a34ee';
 
-var analisis;
-var abc;
-var xyz;
-var textToAnalyze;
-var notaDeAnalista;
+// var analisis;
+// var abc;
+// var xyz;
+// var textToAnalyze;
+// var notaDeAnalista;
 
 
 var performanceId = location.search.split('?')[1];
@@ -69,16 +79,12 @@ function consulta (ticker) {
   document.querySelector('#companyImg').src = companyInfo[0].pictureSrc;
   document.querySelector('#CompanyName').textContent = companyInfo[0].id.toUpperCase();
 
-
-
-
-
-  
+ 
   
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': apiK,
+      'X-RapidAPI-Key': apiK2,
       'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
     }
   };
@@ -90,9 +96,9 @@ function consulta (ticker) {
       .then(function (response) {
           return response.json();
       }).then(function (data) {
-          console.log(data);
+          // console.log(data);
 
-          jkl = data;
+          // jkl = data;
           
           var analystNote = document.querySelector('.analystNote');
     
@@ -120,7 +126,7 @@ function consulta (ticker) {
     .then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
+        // console.log(data);
 
 
         data = data.filter(element => {return element.sourceId != 'pr-newswire'});
@@ -128,7 +134,7 @@ function consulta (ticker) {
         
         
 
-        xyz = data;
+        // xyz = data;
       
         for (let i = 0; i < titleNews.length; i++) {
 
@@ -142,10 +148,15 @@ function consulta (ticker) {
             titleRow[i].setAttribute('data-sourceId', data[i].sourceId);
             titleRow[i].setAttribute('data-position', i);
 
-            console.log('https://ms-finance.p.rapidapi.com/news/get-details?id='+ data[i].id +'&sourceId='+ data[i].sourceId);
+            // console.log('https://ms-finance.p.rapidapi.com/news/get-details?id='+ data[i].id +'&sourceId='+ data[i].sourceId);
 
             newsTitleArray.push(data[i].title);
             newsId.push(data[i].id);
+
+          // Populate news Object Part 1
+
+          
+
 
             getNewsText (data[i].id, data[i].sourceId);
 
@@ -166,7 +177,7 @@ function getNewsText (articleId, sourceId) {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': apiK,
+      'X-RapidAPI-Key': apiK2,
       'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
     }
   };
@@ -175,9 +186,9 @@ function getNewsText (articleId, sourceId) {
     .then(function (response) {
         return response.json();
     }).then(function (extract) {
-        console.log(extract);
+        // console.log(extract);
 
-      abc = extract;
+      // abc = extract;
 
       textToAnalyze = '';
       var failedProcess = 0;
@@ -186,13 +197,13 @@ function getNewsText (articleId, sourceId) {
       i = 0;
 
       while (!endProcess) {
-        console.log('initiasl i= ' + i);
+        // console.log('initiasl i= ' + i);
                         
         if(extract.body && extract.body[i].contentObject && i < extractLength) {
           
           newText = extract.body[i].contentObject[0].content;
           textToAnalyze += newText;
-          console.log(textToAnalyze);
+          // console.log(textToAnalyze);
           
           // textLength += newText.length;
   
@@ -210,7 +221,7 @@ function getNewsText (articleId, sourceId) {
         
 
         i++;
-        console.log('final i= ' + i);
+        // console.log('final i= ' + i);
       }
 
     textToAnalyzeArray.push(textToAnalyze);
@@ -261,8 +272,8 @@ function sentimentAnalysis() {
           .then(function (response) {
               return response.json();
           }).then(function (data) {
-              console.log(data);
-              console.log('El sentimiento es: ' + data.type)
+              // console.log(data);
+              // console.log('El sentimiento es: ' + data.type)
 
               sentimentResultArray.push(data.type);
 
@@ -273,24 +284,27 @@ function sentimentAnalysis() {
               newsObject[index].id = newsId[index];
               newsObject[index].title = newsTitleArray[index];
               newsObject[index].text = textToAnalyzeArray[index];
+              newsObject[index].companyName = companyInfo[0].id;
 
               if (data.type == "positive") {
-                sentimentIcon = "<span style='font-size:40px;'>&#128513;</span>"
+                sentimentIcon = "<span>&#128513;</span>"
                 sentimentData[index].setAttribute('class','has-text-centered sentimentData has-background-success-light') 
               }
               if (data.type == "negative") {
-                sentimentIcon = "<span style='font-size:40px;'>&#128534;</span>"
+                sentimentIcon = "<span>&#128534;</span>"
+                // sentimentIcon = "<span style='font-size:40px;'>&#128534;</span>"
                 sentimentData[index].setAttribute('class', 'has-text-centered sentimentData has-background-danger-light') 
               
               }
               if (data.type == "neutral") {
-                sentimentIcon = "<span style='font-size:40px;'>&#128528;</span>"
+                sentimentIcon = "<span>&#128528;</span>"
                 sentimentData[index].setAttribute('class', 'has-text-centered sentimentData has-background-warning-light') 
               }
 
 
               sentimentNumber[index].textContent = eval(index) + 1;
-              sentimentData[index].innerHTML = '<small>' + data.type + '</small><br> ' + sentimentIcon;
+              sentimentData[index].innerHTML = '<small>' + data.type + '</small><br><span style="font-size:40px;""> ' + sentimentIcon + '</span>';
+              newsObject[index].sentimentIcon = sentimentIcon;
   
         });
 
@@ -304,8 +318,9 @@ table.querySelectorAll('.titleRow').forEach(item => {
   item.addEventListener('click', event => {
 
     selection = event.target;
-    console.log(selection);
+    // console.log(selection);
 
+    if(selection.matches('small')){newsPosition = selection.parentElement.parentElement.getAttribute('data-position')}
     if(selection.matches('td')){newsPosition = selection.parentElement.getAttribute('data-position')}
     if(selection.matches('tr')){newsPosition = selection.getAttribute('data-position')}
 
@@ -328,14 +343,14 @@ document.querySelectorAll('#savedNewsDiv').forEach(item => (
   item.addEventListener('click', event => {
 
     selection = event.target;
-    console.log('este es el boton: ' + selection)
+    // console.log('este es el boton: ' + selection)
 
     newsOrder = selection.getAttribute('data-newsOrder');
     var savedNewslist = JSON.parse(localStorage.getItem("savedNewslist"));
 
     selectedNews = savedNewslist.filter(element => {return element.newsOrder ==  newsOrder});
 
-    console.log(selectedNews[0].text)
+    // console.log(selectedNews[0].text)
     document.querySelector('.extractContentDiv').hidden = false;
     document.querySelector('#extractContent').innerHTML = selectedNews[0].text + '<br><br> Sentiment of Extract: ' +  selectedNews[0].sentiment.toUpperCase();
 
@@ -358,7 +373,10 @@ saveNewsButton.addEventListener('click', event => {
     id: newsObject[newsPosition].id,
     title: newsObject[newsPosition].title,
     text: newsObject[newsPosition].text,
-    sentiment: newsObject[newsPosition].sentiment
+    sentiment: newsObject[newsPosition].sentiment,
+    sentimentIcon: newsObject[newsPosition].sentimentIcon,
+    companyName: newsObject[newsPosition].companyName,
+
   }
 
   var savedNewslist = JSON.parse(localStorage.getItem("savedNewslist"));
@@ -387,16 +405,21 @@ function populateSavedNewsList(list) {
   document.querySelector('#savedNewsDiv').innerHTML = "";
 
   for (let i = 0; i < list.length; i++) {
-    var newElement = document.createElement('div');
-    newElement.setAttribute('class','savedNewsElement notification is-info');
-    newElement.setAttribute('data-newsOrder', list[i].newsOrder);
+    var newElement2 = document.createElement('div');
+    newElement2.setAttribute('class','savedNewsElement notification is-info');
+    newElement2.setAttribute('data-newsOrder', list[i].newsOrder);
     
-    newElement.innerHTML = list[i].title
+    document.querySelector('#savedNewsDiv').append(newElement2)
+    newElement2.innerHTML = '<p class ="is-size-4 list-companyName m-1">' + list[i].companyName.toUpperCase() + '</p>';
+    newElement2.innerHTML += '<p class="is-size-6">' + list[i].title + '.<br><strong>Sentiment:</strong> ' + list[i].sentiment.toUpperCase() + ', <span style="font-size:25px;">' + list[i].sentimentIcon + '</span></p>';
 
 
-    document.querySelector('#savedNewsDiv').append(newElement);
   }
 
 }
 
 
+document.querySelector('#backtoDashboard').addEventListener('click', event => {
+  document.location.assign('index.html')
+
+})
