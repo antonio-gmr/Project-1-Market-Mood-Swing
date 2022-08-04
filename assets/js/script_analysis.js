@@ -45,6 +45,7 @@ var textToAnalyze;
 var notaDeAnalista;
 
 
+
 var performanceId = location.search.split('?')[1];
 consulta(performanceId);
 
@@ -114,8 +115,10 @@ function consulta (ticker) {
       }); 
 
 
+
   // Get News Titles (MS FINANCE API Query)
   fetch('https://ms-finance.p.rapidapi.com/news/list?performanceId=' + performanceId, options)
+
 
     .then(function (response) {
         return response.json();
@@ -166,6 +169,7 @@ function getNewsText (articleId, sourceId) {
   const options = {
     method: 'GET',
     headers: {
+
       'X-RapidAPI-Key': apiK,
       'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
     }
@@ -298,6 +302,7 @@ function sentimentAnalysis() {
 
 }
 
+
 var selection
 
 table.querySelectorAll('.titleRow').forEach(item => {
@@ -398,5 +403,4 @@ function populateSavedNewsList(list) {
   }
 
 }
-
 
