@@ -341,7 +341,7 @@ table.querySelectorAll('.titleRow').forEach(item => {
   })
 })
 
-
+var selectedNews;
 
 document.querySelectorAll('#savedNewsDiv').forEach(item => (
   item.addEventListener('click', event => {
@@ -349,7 +349,14 @@ document.querySelectorAll('#savedNewsDiv').forEach(item => (
     selection = event.target;
     // console.log('este es el boton: ' + selection)
 
-    newsOrder = selection.getAttribute('data-newsOrder');
+    
+    if(selection.matches('strong') || selection.matches('span') ){newsOrder = selection.parentElement.parentElement.getAttribute('data-newsOrder')}
+    if(selection.matches('p')){newsOrder = selection.parentElement.getAttribute('data-newsOrder')}
+    if(selection.matches('.savedNewsElement ')){newsOrder = selection.getAttribute('data-newsOrder')}
+
+    // newsOrder = selection.getAttribute('data-newsOrder');
+    
+    
     var savedNewslist = JSON.parse(localStorage.getItem("savedNewslist"));
 
     selectedNews = savedNewslist.filter(element => {return element.newsOrder ==  newsOrder});
@@ -357,7 +364,7 @@ document.querySelectorAll('#savedNewsDiv').forEach(item => (
     // console.log(selectedNews[0].text)
     document.querySelector('.extractContentDiv').hidden = false;
     document.querySelector('#extractContent').innerHTML = selectedNews[0].text + '<br><br> Sentiment of Extract: ' +  selectedNews[0].sentiment.toUpperCase();
-
+    document.querySelector('#extractTitle').innerHTML = selectedNews[0].title;
     saveNewsButton.disabled = true;
 
 
