@@ -33,8 +33,18 @@ Developed app was created with:
 
 ## Screenshots
 
-Some screenshots to show the environment 
+![image](https://user-images.githubusercontent.com/107447818/182945546-2ddf618e-fdf7-4133-aab8-0c98d4c34d54.png)
+Main page, where you can find the companies that you preffer
 
+![image](https://user-images.githubusercontent.com/107447818/182945801-31a58cbf-2974-40d8-8d16-d01121ef6592.png)
+When you select a company, you can visualize four sections:
+- Main news: Most recent news about the company.
+- Sentiment analysis: Section that gives you the mood about those news.
+- News extract: You can read an specific new and save it.
+
+![image](https://user-images.githubusercontent.com/107447818/182946890-40fc265f-1f37-4829-82d4-1e05ccc03682.png)
+- Saved notes: Space where you can find your saved news.
+- Analyst note: An article writed by an expert to understend the mood of the company.
 
 
 ## Develop
