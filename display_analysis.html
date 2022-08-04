@@ -29,18 +29,19 @@
     <div class="tile is-ancestor m-4">
         <div class="tile is-vertical is-8">
           <div class="tile">
-            <div class="tile is-parent is-vertical">
+             <div class="tile is-parent is-vertical">
+
               <article class="tile is-child box is-grey-lighter ">
-                <p class="subtitle titleNews has-text-weight-semibold">Nes title</p>
-                <p class=""></p>
-              </article>
-              <article class="tile is-child box is-grey-lighter ">
-                <p class="subtitle titleNews has-text-weight-semibold">News Title</p>
-                <p class=""></p>
-              </article>
-              <article class="tile is-child box is-grey-lighter ">
-                <p class="subtitle titleNews has-text-weight-semibold">News Title</p>
-                <p class=""></p>
+                <p class="title">Main News:</p>
+                <table class="table is-stripped is-fullwidth  is-hoverable">
+                  <tr><td class="titleNews"></td><td class="sentiment">Positive</td></tr>
+                  <tr><td class="titleNews"></td><td class="sentiment">Positive</td></tr>
+                  <tr><td class="titleNews"></td><td class="sentiment">Positive</td></tr>
+                  <tr><td class="titleNews"></td><td class="sentiment">Positive</td></tr>
+                </table>
+
+                <!-- <p class="subtitle titleNews has-text-weight-semibold">News Title</p> -->
+
               </article>
             </div>
             <div class="tile is-parent">
@@ -53,28 +54,40 @@
               </article>
             </div>
           </div>
-          <div class="tile is-parent">
+          <div class="tile is-parent is-vertical">
             <article class="tile is-child notification is-danger">
-            <div class="columns">
-                <div>
-                    <img  class="m-2" id="analystPic" alt="Analyst Pic">
+
+            </article>
+            <article class="tile is-child notification is-danger">
+              <div class="content columns">
+                <p class="title">Sentiment Analysis</p>
+                <p class=""></p>
+                <div class="content">
+                  <!-- Content -->
                 </div>
-                <div class="column is-3">
-                    <p class="title m-0">Analyst Note</p>
-                    <P id="authorName"></P>
-                </div>
-            </div>
-              <p class=""></p>
-              <div class="content analystNote">
-                <!-- Content -->
               </div>
             </article>
           </div>
         </div>
-        <div class="tile is-parent">
+        <div class="tile is-parent is is-vertical">
+          <article class="tile is-child notification is-success">
+            <div class="columns">
+              <div>
+                  <img  class="m-2" id="analystPic" alt="Analyst Pic">
+              </div>
+              <div class="column is-6">
+                  <p class="title m-0">Analyst Note</p>
+                  <P id="authorName"></P>
+              </div>
+          </div>
+            <p class=""></p>
+            <div class="content analystNote">
+              <!-- Content -->
+            </div>
+          </article>
           <article class="tile is-child notification is-success">
             <div class="content">
-              <p class="title">Sentiment Analysis</p>
+              <p class="title"></p>
               <p class=""></p>
               <div class="content">
                 <!-- Content -->
