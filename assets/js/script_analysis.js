@@ -17,7 +17,11 @@ function consulta (ticker) {
     const options = {
       method: 'GET',
       headers: {
+<<<<<<< Updated upstream
         'X-RapidAPI-Key': '85833d30d9msh85eb490dc8a99e2p115b44jsn06448356e16c',
+=======
+        'X-RapidAPI-Key': '0a0df23692mshac18e5e471bd5fdp1bfcadjsn411fe1be785f-',
+>>>>>>> Stashed changes
         'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
       }
     };
@@ -80,7 +84,11 @@ function consulta (ticker) {
 //   Query - Sentiment Analysis
 var analisis;
 
+<<<<<<< Updated upstream
 function sentimentAnalysis () {
+=======
+function sentimentAnalysis (analyzeText) {
+>>>>>>> Stashed changes
 
 
     const options = {
@@ -92,7 +100,11 @@ function sentimentAnalysis () {
     };
     
     // analyzeText = "Narrow-moat%20Apple%20reported%20healthy%20fiscal%20third-quarter%20results%20that%20came%20in%20line%20with%20our%20estimates.%20We%20are%20maintaining%20our%20%24130%20fair%20value%20estimate%20and%20still%20view%20shares%20as%20overvalued.%20While%20we%20remain%20positive%20on%20Apple's%20ability%20to%20extract%20sales%20from%20its%20installed%20base%20via%20new%20products%20and%20services%2C%20we%20believe%20demand%20for%20Apple%E2%80%99s%20products%20is%20likely%20to%20slow%20in%20the%20next%20few%20quarters%2C%20following%20several%20stellar%20quarters%20of%20growth."
+<<<<<<< Updated upstream
     analyzeText = "<p>Tesla's second-quarter results reflected the company's temporary issues as gross profits fell over 20% versus the first quarter but were still up over 45% year on year. During the quarter, revenue and profits were affected by COVID-19-related lockdowns that affected production at the company's Shanghai factory. Additionally, the opening and ramp-up of the new factories in Austin and Berlin weighed on profits. However, we had largely expected that the second quarter would be the low point of the year, and we maintain our outlook for Tesla to deliver around 1.5 million vehicles in 2022. Our outlook for the automotive segment is largely unchanged.</p>"
+=======
+    //analyzeText = "<p>Tesla's second-quarter results reflected the company's temporary issues as gross profits fell over 20% versus the first quarter but were still up over 45% year on year. During the quarter, revenue and profits were affected by COVID-19-related lockdowns that affected production at the company's Shanghai factory. Additionally, the opening and ramp-up of the new factories in Austin and Berlin weighed on profits. However, we had largely expected that the second quarter would be the low point of the year, and we maintain our outlook for Tesla to deliver around 1.5 million vehicles in 2022. Our outlook for the automotive segment is largely unchanged.</p>"
+>>>>>>> Stashed changes
 
     fetch('https://twinword-sentiment-analysis.p.rapidapi.com/analyze/?text=' + analyzeText, options)
 
@@ -103,6 +115,10 @@ function sentimentAnalysis () {
         console.log(data);
         
         analisis = data;
+<<<<<<< Updated upstream
+=======
+        console.log("el sentimiento es" + analisis)
+>>>>>>> Stashed changes
 
     
     
@@ -118,7 +134,11 @@ function getNewsText (articleId, sourceId) {
   const options = {
     method: 'GET',
     headers: {
+<<<<<<< Updated upstream
       'X-RapidAPI-Key': '85833d30d9msh85eb490dc8a99e2p115b44jsn06448356e16c',
+=======
+      'X-RapidAPI-Key': '0a0df23692mshac18e5e471bd5fdp1bfcadjsn411fe1be785f',
+>>>>>>> Stashed changes
       'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
     }
   };
@@ -163,8 +183,16 @@ function getNewsText (articleId, sourceId) {
                 i++;
                 console.log('final i= ' + i);
               }
+<<<<<<< Updated upstream
               
             });
 
 }
 
+=======
+              sentimentAnalysis(textToAnalyze)
+            });
+
+}
+6
+>>>>>>> Stashed changes
